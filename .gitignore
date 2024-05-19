@@ -1,0 +1,11 @@
+credentials.h
+
+.vscode/
+.DS_Store
+
+.pio
+.pioenvs
+.piolibdeps
+.clang_complete
+.gcc-flags.json
+.pio
