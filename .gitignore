@@ -1,4 +1,7 @@
 credentials.h
+server/.env
+server/db/
+node_modules/
 
 .vscode/
 .DS_Store
