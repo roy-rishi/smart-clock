@@ -43,7 +43,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Clock Settings")),
       body: const Column(
-        children: [
+        children: [ 
           Padding(
             padding: EdgeInsets.only(top: 20, bottom: 10),
             child: Text("Update your clock's settings"),

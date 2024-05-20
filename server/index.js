@@ -65,26 +65,44 @@ app.post("/register-clock", (req, res) => {
 // add alarm to db
 app.post("/add-alarm", (req, res) => {
     console.log("\nPOST /add-alarm");
-    // parse authentication header
     const auth_header = req.headers.authorization;
     if (!auth_header)
         return res.status(401).send("Unauthorized request");
     let auth = null;
     try {
-        auth = new Buffer.from(auth_header.split(" ")[1], "base64").toString().split(":");
+        auth = auth_header.split(" ")[1];
     } catch (err) {
-        return res.status(400).send("An error occured while parsing the provided basic auth header");
+        return res.status(400).send(err.message);
     }
-    const clock = auth[0];
-    const pass = auth[1];
-    if (!verifyCreds(clock, pass))
-        return res.status(401).send("Invalid credentials");
+    if (auth != process.env.PASS)
+        return res.status(401).send();
 
-    let time = req.body.time;
-    let routine = req.body.routine;
-    alarms_db.run("INSERT INTO Alarms(Time, Routine) VALUES(?, ?)", [time, routine], (err) => {
+    alarms_db.run("INSERT INTO Alarms(Hour, Minute, Routine) VALUES(?, ?, ?)", [req.body.hour, req.body.minute, req.body.routine], (err) => {
         if (err)
             return res.status(400).send(err.message);
         return res.send("Added alarm");
+    });
+});
+
+// get all alarms
+app.get("/alarms", (req, res) => {
+    console.log("\nGET /alarms");
+    const auth_header = req.headers.authorization;
+    if (!auth_header)
+        return res.status(401).send("Unauthorized request");
+    let auth = null;
+    try {
+        auth = auth_header.split(" ")[1];
+    } catch (err) {
+        return res.status(400).send(err.message);
+    }
+    console.log(auth);
+    if (auth != process.env.PASS)
+        return res.status(401).send();
+
+    alarms_db.all("SELECT * FROM Alarms", [], (err, rows) => {
+        if (err)
+            return res.status(500).send(err.message);
+        res.send(JSON.stringify(rows));
     });
 });
