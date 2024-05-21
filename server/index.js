@@ -23,14 +23,6 @@ app.listen(PORT);
 let alarms_db = new sqlite3.Database("./db/alarms.db");
 let clocks_db = new sqlite3.Database("./db/clocks.db");
 
-// verify credentials
-function verifyCreds(clock, pass) {
-    clocks_db.get("SELECT * FROM Clocks WHERE Clock = ? AND Pass = ?", [clock, pass], (err) => {
-        return !err;
-    });
-    return false;
-}
-
 // landing page
 app.get("/", (req, res) => {
     console.log("\nGET /");
@@ -82,6 +74,7 @@ app.post("/add-alarm", (req, res) => {
             return res.status(400).send(err.message);
         return res.send("Added alarm");
     });
+    shouldUpdateAlarms = true;
 });
 
 // get all alarms
@@ -105,4 +98,32 @@ app.get("/alarms", (req, res) => {
             return res.status(500).send(err.message);
         res.send(JSON.stringify(rows));
     });
+});
+
+let shouldUpdateAlarms = false;
+app.get("/should-update", (req, res) => {
+    console.log("\nGET /should-update");
+    res.send(shouldUpdateAlarms);
+    shouldUpdateAlarms = false;
+    return;
+})
+
+let shouldPulse = false;
+app.get("/pulse", (req, res) => {
+    console.log("\nGET /pulse");
+    shouldPulse = true;
+    return res.send();
+});
+app.post("/pulse", (req, res) => {
+    console.log("\nGET /pulse");
+    shouldPulse = true;
+    return res.send();
+});
+
+app.get("/should-pulse", (req, res) => {
+    console.log("\nGET /should-pulse");
+    res.send(shouldPulse);
+    if (shouldPulse)
+        shouldPulse = false;
+    return;
 });
