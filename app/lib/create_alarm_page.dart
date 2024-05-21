@@ -90,9 +90,13 @@ class _TimeSelectorState extends State<TimeSelector> {
         child: InkWell(
           onTap: () async {
             TimeOfDay? selectedTime = await showTimePicker(
+              barrierDismissible: false,
               initialTime: TimeOfDay.now(),
               context: context,
             );
+            if (selectedTime == null) {
+              return;
+            }
             widget.alarmTime = selectedTime as TimeOfDay;
             setState(() {
               widget.selectionMade = true;
