@@ -156,7 +156,7 @@ class _CreateAlarmPageState extends State<CreateAlarmPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Configure Alarm")),
+        appBar: AppBar(title: const Text("Configure Alarm"), toolbarHeight: 100),
         body: Column(
           children: [
             Expanded(

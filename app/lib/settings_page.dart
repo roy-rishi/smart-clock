@@ -41,9 +41,9 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Clock Settings")),
+      appBar: AppBar(title: const Text("Clock Settings"), toolbarHeight: 100),
       body: const Column(
-        children: [ 
+        children: [
           Padding(
             padding: EdgeInsets.only(top: 20, bottom: 10),
             child: Text("Update your clock's settings"),

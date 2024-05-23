@@ -53,7 +53,7 @@ class _AlarmsPageState extends State<AlarmsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Alarms")),
+      appBar: AppBar(title: const Text("Alarms"), toolbarHeight: 100),
       body: ListView(children: [
         const Padding(
           padding: EdgeInsets.only(top: 20, bottom: 10),
